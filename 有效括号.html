@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let isValid = (s) => {
+        const stack = []
+        for (const i of s) {
+          if (i === '(' || i === '{' || i === '[') {
+            stack.push(i)
+          } else {
+            if (stack.length) {
+              if (i === ')') {
+                if (stack.pop() !== '(') {
+                  return false
+                }
+              } else if (i === '}') {
+                if (stack.pop() !== '{') {
+                  return false
+                }
+              } else if (i === ']') {
+                if (stack.pop() !== '[') {
+                  return false
+                }
+              }
+            } else {
+              return false
+            }
+          }
+        }
+        return !!!stack.length
+      }
+
+      let isValid2 = (s) => {
+        if (!s.length) return false
+        const stack = []
+        for (const i of s) {
+          if (i === '(') {
+            stack.push(')')
+          } else if (i === '{') {
+            stack.push('}')
+          } else if (i === '[') {
+            stack.push(']')
+          } else if (stack.length === 0 || i !== stack.pop()) {
+            return false
+          }
+        }
+        return !!!stack.length
+      }
+
+      const s = '([)]'
+      console.log(isValid(s))
+    </script>
+  </body>
+</html>

@@ -8,9 +8,60 @@
   </head>
   <body>
     <script>
-      for (let i = 0; i < 2; i++) {
-        console.log(i)
+      /**
+       * @param {number[]} nums 数据
+       * @param {number} target  求和的值
+       * @return {number[][]}
+       */
+      function fourSum(nums, target) {
+        // 四数之和参数的长度至少为4
+        if (nums.length < 4) return
+        // 对数组进行排序
+        nums.sort((a, b) => a - b)
+        // 返回的结果
+        const res = []
+
+        for (let i = 0; i < nums.length; i++) {
+          // 单个值大于最终求和的值无法满足条件
+          if (nums[i] > target) break
+          // 当次循环和上一次循环的值相同，重复计算，直接进行下一次循环
+          if (i > 0 && nums[i] === nums[i - 1]) continue
+
+          for (let j = i + 1; j < nums.length; j++) {
+            // 两个数的和大于最终求和的值无法满足条件
+            if (nums[j] + nums[i] > target) break
+            // 两次循环的值相同跳过进行下一次循环
+            if (j > i + 1 && nums[j] === nums[j - 1]) continue
+
+            // 双指针
+            let l = j + 1,
+              r = nums.length - 1
+
+            // 左指针必须小于右指针
+            while (l < r) {
+              const sum = nums[i] + nums[j] + nums[l] + nums[r]
+
+              // 满足条件
+              if (sum === target) {
+                res.push([nums[i], nums[j], nums[l], nums[r]])
+                l++
+                r--
+                while (l < r && nums[l] === nums[l - 1]) l++
+                while (l < r && nums[r] === nums[r - 1]) r--
+              }
+
+              // 不满足条件，比最终的值小，因为升序排列只要移动左指针就可以
+              if (sum < target) l++
+
+              // 不满足条件，比最终的值大，升序排列只需移动右指针
+              if (sum > target) r--
+            }
+          }
+        }
+        return res
       }
+      const nums = [1, 0, -1, 0, -2, 2]
+      console.log(fourSum(nums, 0))
     </script>
   </body>
 </html>

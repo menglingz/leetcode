@@ -8,6 +8,10 @@
   </head>
   <body>
     <script>
+      /**
+       * 合并K个升序链表
+       * 方法：将所有链表打平为一个数组，将这个数组进行排序，最后根据这个升序的数组生成一个链表
+       */
       const mergeKLists = (lists) => {
         const temp = []
         if (!lists.length) return

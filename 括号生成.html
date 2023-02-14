@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 括号生成
+       * 使用回溯法，深度优先（DFS）搜索的方法进行排列组合，在遍历的同时可以进行剪枝优化时间复杂度
+       */
+      const generateParenthsis = (n) => {
+        if (n < 0) return []
+        const res = []
+        const dfs = (paths, left, right) => {
+          if (left > n || right > n || left < right) return
+          if (paths.length === n * 2) {
+            res.push(paths)
+            return
+          }
+          dfs(paths + '(', left + 1, right)
+          dfs(paths + ')', left, right + 1)
+        }
+        dfs('', 0, 0)
+        return res
+      }
+      console.log(generateParenthsis(3))
+    </script>
+  </body>
+</html>

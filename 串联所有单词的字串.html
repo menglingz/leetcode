@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * @param {string} s
+       * @param {string[]} words
+       * @return {number[]}
+       */
+      const findSubstring = (s, words) => {
+        const cnts = new Map(),
+          ans = new Array(),
+          step = words[0].length,
+          n = words.length
+        for (const word of words) {
+          if (cnts.has(word)) {
+            cnts.set(word, cnts.get(word) + 1)
+          } else {
+            cnts.set(word, 1)
+          }
+        }
+        out: for (
+          let i = 0;
+          i < s.length - step * n;
+          i++
+        ) {
+          const curCnts = new Map()
+          for (let j = 0; j < n; j++) {
+            const subStr = s.substr(
+              i + j * step,
+              step
+            )
+            if (!cnts.has(subStr)) continue out // 跳出外层循环
+            if (curCnts.has(subStr)) {
+              curCnts.set(
+                subStr,
+                curCnts.get(subStr) + 1
+              )
+              if (
+                curCnts.get(subStr) >
+                cnts.get(subStr)
+              ) {
+                continue out
+              }
+            } else {
+              curCnts.set(subStr, 1)
+            }
+          }
+          ans.push(i)
+        }
+        return ans
+      }
+      const s = 'barfoothefoobarman'
+      const words = ['foo', 'bar']
+      console.log(findSubstring(s, words))
+    </script>
+  </body>
+</html>

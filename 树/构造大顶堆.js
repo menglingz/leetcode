@@ -18,15 +18,15 @@ const headpSort = array => {
 const adjustHeap = (array, i, length) => {
   const temp = array[i]
   let k = i * 2 + 1 // 第一次拿到的最后一个非叶子结点
-  while (k < length) {
+  while (k < length) { // while循环处理，解决步骤5
     if (k + 1 < length && array[k] < array[k + 1]) {
-      // 左子节点的值小雨右子节点的值
+      // 左子节点的值小于右子节点的值
       k += 1 // k指向右子节点
     }
     if (temp < array[k]) {
       // 当前节点小于叶子结点，和非叶子结点比较
       array[i] = array[k] // 把大的值赋给当前节点
-      i = k // 继续循环
+      i = k // 拿到最大值的索引I,便于循环结束后将temp存储的值交换到I指定位置
     } else {
       // 当前节点比叶子结点都要大，不需要调整
       break
